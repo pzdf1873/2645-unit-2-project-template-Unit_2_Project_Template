@@ -32,5 +32,9 @@ int is_valid_input(const char BinaryInput[]){
             return -1;  
         }
     }
-    return 0;
+    if(strlen(BinaryInput) == 4 || strlen(BinaryInput) == 8 || strlen(BinaryInput) == 16){
+        return 0;
+    }else{
+        return -1;
+    }
 }
