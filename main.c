@@ -145,7 +145,7 @@ static char enter_binary_number(void){
     char BinaryInput[16];
     printf("Enter your binary number: ");
     fgets(BinaryInput,16,stdin);
-    BinaryInput[strcspn(BinaryInput, "\r\n")] = '\0';
+    BinaryInput[strcspn(BinaryInput, "\r\n")] = '\0'; //Need to get rid of the end of array so length is correct
     int check =  is_valid_input(BinaryInput);
     if(check !=0){
         printf("Invalid input");
