@@ -27,7 +27,7 @@ int main(void)
     return 0;
 }
 
-static void main_menu(void)
+void main_menu(void)
 {
     print_main_menu();
     {
@@ -140,7 +140,7 @@ static int is_integer(const char *s)
     }
     return 1;
 }
-static int enter_binary_number(char *output_buffer, size_t buffer_size){
+int enter_binary_number(char *output_buffer, size_t buffer_size){
     char BinaryInput[16];
     printf("Enter your binary number: ");
 
@@ -161,7 +161,7 @@ static int enter_binary_number(char *output_buffer, size_t buffer_size){
         return 0; // Success
     }
 }
-static int get_math_input(void)
+int get_math_input(void)
 {
     enum { MATH_MENU_ITEMS = 4 };   //* 1..3 items 4 = exit
     char buf[128];

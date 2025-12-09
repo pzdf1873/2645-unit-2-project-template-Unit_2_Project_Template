@@ -36,10 +36,10 @@ void Mathematical_Operation(void) {
         }
         break;
     case 2:
-        Binary_Subtraction();
+        //Binary_Subtraction();
         break;
     case 3:
-        Binary_Multiplication();
+        //Binary_Multiplication();
         break;
     case 4:
         main_menu();
