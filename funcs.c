@@ -81,7 +81,7 @@ int is_valid_input(const char BinaryInput[]){
         return -1;
     }
 }
-char Binary_Addition(const char BinaryMatrix[2][16],char *output_buffer){
+int Binary_Addition(const char BinaryMatrix[2][16],char *output_buffer){
     int Bit1;
     int Bit2;
     int carry = 0;
