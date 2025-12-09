@@ -11,7 +11,8 @@ void Mathematical_Operation(void) {
            "\t3. Binary Multiplication\t\t\n"
            "\t4. Exit to Menu\t\t\n"
            "\t\t\t\t\t\t\n");
-    int input; //I need to add code to handle the input     
+    int input = get_math_input(); //I need to add code to handle the input 
+
     switch (input)
     {
     case 1:

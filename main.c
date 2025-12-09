@@ -161,3 +161,37 @@ static int enter_binary_number(char *output_buffer, size_t buffer_size){
         return 0; // Success
     }
 }
+static int get_math_input(void)
+{
+    enum { MATH_MENU_ITEMS = 4 };   //* 1..3 items 4 = exit
+    char buf[128];
+    int valid_input = 0;
+    int value = 0;
+
+    do {
+        printf("\nSelect item: ");
+        if (!fgets(buf, sizeof(buf), stdin)) {
+            /* EOF or error; bail out gracefully */
+            puts("\nInput error. Exiting.");
+            exit(1);
+        }
+
+        // strip trailing newline
+        buf[strcspn(buf, "\r\n")] = '\0';
+
+        if (!is_integer(buf)) {
+            printf("Enter an integer!\n");
+            valid_input = 0;
+        } else {
+            value = (int)strtol(buf, NULL, 10);
+            if (value >= 1 && value <= MATH_MENU_ITEMS) {
+                valid_input = 1;
+            } else {
+                printf("Invalid menu item!\n");
+                valid_input = 0;
+            }
+        }
+    } while (!valid_input);
+
+    return value;
+}
