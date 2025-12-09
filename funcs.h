@@ -11,6 +11,7 @@ void main_menu(void);
 int enter_binary_number(char *output_buffer, size_t buffer_size);
 int get_math_input(void);
 void Twos_complement(char SubtractorInput[]);
+int PrepareBinaryInputs(char inputmatrix[2][17]);
 
 
 #endif

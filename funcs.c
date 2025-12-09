@@ -20,27 +20,10 @@ void Mathematical_Operation(void) {
     switch (input)
     {
     case 1:{
-        char number1[17];
-        char number2[17];
-        char result[18]; //to deal with the carry
-        
-        if (enter_binary_number(number1, sizeof(number1)) != 0) break;
-        if (enter_binary_number(number2, sizeof(number2)) != 0) break;
-
         char inputmatrix[2][17];
-        size_t len1 = strlen(number1);
-        memset(inputmatrix[0], '0', 16);
-        inputmatrix[0][16] = '\0';
-        if (len1 <= 16) {
-            strncpy(inputmatrix[0] + (16 - len1), number1, len1);
-        }
-
-        size_t len2 = strlen(number2);
-        memset(inputmatrix[1], '0', 16);
-        inputmatrix[1][16] = '\0';
-        if (len2 <= 16) {
-            strncpy(inputmatrix[1] + (16 - len2), number2, len2);
-        }
+        char result[18];
+        
+        if (PrepareBinaryInputs(inputmatrix) != 0) break;
 
         int result_status = Binary_Addition(inputmatrix, result);
 
@@ -50,33 +33,15 @@ void Mathematical_Operation(void) {
         break;
     }
     case 2:{
-        char number1[17];
-        char number2[17];
-        char result[18];
-
-        if (enter_binary_number(number1, sizeof(number1)) != 0) break;
-        if (enter_binary_number(number2, sizeof(number2)) != 0) break;
-
         char inputmatrix[2][17];
-        size_t len1 = strlen(number1);
-        memset(inputmatrix[0], '0', 16);
-        inputmatrix[0][16] = '\0';
-        if (len1 <= 16) {
-            strncpy(inputmatrix[0] + (16 - len1), number1, len1);
-        }
-
-        size_t len2 = strlen(number2);
-        memset(inputmatrix[1], '0', 16);
-        inputmatrix[1][16] = '\0';
-        if (len2 <= 16) {
-            strncpy(inputmatrix[1] + (16 - len2), number2, len2);
-        }
-        Twos_complement(inputmatrix[1]);
+        char result[18];
+        if (PrepareBinaryInputs(inputmatrix) != 0) break;
+        Twos_complement(inputmatrix[1]); //Only the 2nd number needs to become 2s complement form
 
         int result_status = Binary_Addition(inputmatrix, result);
 
         if (result_status == 0){
-            printf("\n""The sum of the 2 binary bumbers is: %s\n",result);
+            printf("\n""The mathematical operation of the two binary bnumbers is: %s\n",result);
         }
         break;
     }
@@ -110,6 +75,7 @@ void menu_item_4(void) {
     printf("\nSome code here does something useful\n");
     /* you can call a function from here that handles menu 4 */
 }
+
 int is_valid_input(const char BinaryInput[]){
     for (int i = 0; i < (strlen(BinaryInput)); i++)
     {
@@ -123,6 +89,7 @@ int is_valid_input(const char BinaryInput[]){
         return -1;
     }
 }
+
 int Binary_Addition(const char BinaryMatrix[2][17],char *output_buffer){
     int Bit1;
     int Bit2;
@@ -153,6 +120,7 @@ int Binary_Addition(const char BinaryMatrix[2][17],char *output_buffer){
     return 0;   
     
 }
+
 void Twos_complement(char SubtractorInput[]){
     bool BitCheck = false;
     for(int i = 15;i>=0;i--){
@@ -169,4 +137,28 @@ void Twos_complement(char SubtractorInput[]){
             }
         }
     }
+}
+
+int prepareInputs(char inputmatrix[2][17]){
+    char number1[17];
+    char number2[17];
+    char result[18];
+
+    if (enter_binary_number(number1, sizeof(number1)) != 0) return -1;
+    if (enter_binary_number(number2, sizeof(number2)) != 0) return -1;
+
+    size_t len1 = strlen(number1);
+    memset(inputmatrix[0], '0', 16);
+    inputmatrix[0][16] = '\0';
+    if (len1 <= 16) {
+        strncpy(inputmatrix[0] + (16 - len1), number1, len1);
+    }
+
+    size_t len2 = strlen(number2);
+    memset(inputmatrix[1], '0', 16);
+    inputmatrix[1][16] = '\0';
+    if (len2 <= 16) {
+        strncpy(inputmatrix[1] + (16 - len2), number2, len2);
+    }
+    return 0;
 }
