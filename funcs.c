@@ -19,23 +19,32 @@ void Mathematical_Operation(void) {
     switch (input)
     {
     case 1:
-        char number1[16];
-        char number2[16];
-        char result[17]; //to deal with the carry
+        char number1[17];
+        char number2[17];
+        char result[18]; //to deal with the carry
         
         if (enter_binary_number(number1, sizeof(number1)) != 0) break;
         if (enter_binary_number(number2, sizeof(number2)) != 0) break;
 
-        char inputmatrix[2][16];
-        strncpy(inputmatrix[0], number1, sizeof(inputmatrix[0]) - 1);
-        inputmatrix[0][sizeof(inputmatrix[0]) - 1] = '\0'; //getting rid of the null pointer
-        strncpy(inputmatrix[1], number2, sizeof(inputmatrix[1]) - 1);
-        inputmatrix[1][sizeof(inputmatrix[1]) - 1] = '\0'; 
+        char inputmatrix[2][17];
+        size_t len1 = strlen(number1);
+        memset(inputmatrix[0], '0', 16);
+        inputmatrix[0][16] = '\0';
+        if (len1 <= 16) {
+            strncpy(inputmatrix[0] + (16 - len1), number1, len1);
+        }
+
+        size_t len2 = strlen(number2);
+        memset(inputmatrix[1], '0', 16);
+        inputmatrix[1][16] = '\0';
+        if (len2 <= 16) {
+            strncpy(inputmatrix[1] + (16 - len2), number2, len2);
+        }
 
         int result_status = Binary_Addition(inputmatrix, result);
 
         if (result_status == 0){
-            printf("The sum of the 2 binary bumbers is: %s\n",result);
+            printf("\n""The sum of the 2 binary bumbers is: %s\n",result);
         }
         break;
     case 2:
@@ -84,12 +93,12 @@ int is_valid_input(const char BinaryInput[]){
         return -1;
     }
 }
-int Binary_Addition(const char BinaryMatrix[2][16],char *output_buffer){
+int Binary_Addition(const char BinaryMatrix[2][17],char *output_buffer){
     int Bit1;
     int Bit2;
     int carry = 0;
     char result[16];
-    for(int i = 15; i >0 ; i--){
+    for(int i = 15; i >=0 ; i--){
         Bit1 = (BinaryMatrix[0][i] - '0');
         Bit2 = (BinaryMatrix[1][i] - '0');
 
