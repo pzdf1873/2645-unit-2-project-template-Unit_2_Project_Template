@@ -3,8 +3,37 @@
 #include <string.h>
 
 void Mathematical_Operation(void) {
-    printf("\n>> Menu 1\n");
-    printf("\nSome code here does something useful\n");
+    printf("\n>> Mathematical Operation Menu\n");
+    printf("\n"
+           "\t\t\t\t\t\t\n"
+           "\t1. Binary Addition\t\t\n"
+           "\t2. Binary Subtraction\t\t\n"
+           "\t3. Binary Multiplication\t\t\n"
+           "\t4. Exit to Menu\t\t\n"
+           "\t\t\t\t\t\t\n");
+    int input;      
+    switch (input)
+    {
+    case 1:
+        char number1 = enter_binary_number();
+        char number2 = enter_binary_number();
+        char inputmatrix[0] = number1;
+        inputmatrix[1] = number2;
+        char result = Binary_Addition(inputmatrix);
+        break;
+    case 2:
+        Binary_Subtraction();
+        break;
+    case 3:
+        Binary_Multiplication();
+        break;
+    case 4:
+        main_menu();
+        break;
+    default:
+        main_menu();
+        break;
+    }
     /* you can call a function from here that handles menu 1 */
 }
 
@@ -37,4 +66,42 @@ int is_valid_input(const char BinaryInput[]){
     }else{
         return -1;
     }
+}
+char Binary_Addition(const char BinaryMatrix[2][16]){
+    int Bit1;
+    int Bit2;
+    int carry = 0;
+    char result[16];
+    for(int i; i = (16-1) ; i--){
+        Bit1 = (BinaryMatrix[0][i] - '0');
+        Bit2 = (BinaryMatrix[1][i] - '0');
+
+        if(Bit1 + Bit2 + carry == 0){
+            result[i] = 0;
+            carry = 0;
+        }else if(Bit1 + Bit2 + carry == 1){
+
+            result[i] = 1;
+
+            carry = 0;
+        }else if(Bit1 + Bit2 + carry == 2){
+
+            result[i] = 0;
+
+            carry = 1;
+        }else if(Bit1 + Bit2 + carry == 3){
+
+            result[i] = 1;
+
+            carry = 1;
+        }
+    }
+    if(carry ==1){
+        printf("Number is too large to store in 16 bits");
+        return -1;
+    }else{
+        printf("Number Valid");
+        return result;
+    }
+    
 }
