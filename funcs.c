@@ -45,9 +45,18 @@ void Mathematical_Operation(void) {
         }
         break;
     }
-    case 3:
-        //Binary_Multiplication();
+    case 3:{
+        char inputmatrix[2][17];
+        char result[18];
+        if (PrepareBinaryInputs(inputmatrix) != 0) break;
+        
+        int result_status = Binary_Multiplication(inputmatrix, result);
+        
+        if (result_status == 0){
+            printf("\n""The mathematical operation of the two binary bnumbers is: %s\n",result);
+        }
         break;
+    }
     case 4:
         main_menu();
         break;
@@ -194,8 +203,8 @@ int Binary_Multiplication(const char BinaryMatrix[2][17],char *output_buffer){
 
     strcpy(current_sum, product[0]);
     for(int r = 1;r<16;r++){
-        strcopy(next_add[0],current_sum);
-        strcopy(next_add[1],product[r]);
+        strcpy(next_add[0],current_sum);
+        strcpy(next_add[1],product[r]);
         int status = Binary_Addition_32bit(next_add,current_sum);
         if(status != 0){
             printf("Error during addition");

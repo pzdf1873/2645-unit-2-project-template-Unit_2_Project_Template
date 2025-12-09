@@ -13,6 +13,7 @@ int enter_binary_number(char *output_buffer, size_t buffer_size);
 int get_math_input(void);
 void Twos_complement(char SubtractorInput[]);
 int PrepareBinaryInputs(char inputmatrix[2][17]);
+int Binary_Multiplication(const char BinaryMatrix[2][17], char *output_buffer);
 
 
 #endif
