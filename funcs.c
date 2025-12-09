@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "funcs.h"
 #include <string.h>
+#include <stdbool.h>
 
 extern void main_menu(void);
 extern int enter_binary_number(char *output_buffer, size_t buffer_size);
@@ -18,7 +19,7 @@ void Mathematical_Operation(void) {
 
     switch (input)
     {
-    case 1:
+    case 1:{
         char number1[17];
         char number2[17];
         char result[18]; //to deal with the carry
@@ -47,9 +48,38 @@ void Mathematical_Operation(void) {
             printf("\n""The sum of the 2 binary bumbers is: %s\n",result);
         }
         break;
-    case 2:
-        //Binary_Subtraction();
+    }
+    case 2:{
+        char number1[17];
+        char number2[17];
+        char result[18];
+
+        if (enter_binary_number(number1, sizeof(number1)) != 0) break;
+        if (enter_binary_number(number2, sizeof(number2)) != 0) break;
+
+        char inputmatrix[2][17];
+        size_t len1 = strlen(number1);
+        memset(inputmatrix[0], '0', 16);
+        inputmatrix[0][16] = '\0';
+        if (len1 <= 16) {
+            strncpy(inputmatrix[0] + (16 - len1), number1, len1);
+        }
+
+        size_t len2 = strlen(number2);
+        memset(inputmatrix[1], '0', 16);
+        inputmatrix[1][16] = '\0';
+        if (len2 <= 16) {
+            strncpy(inputmatrix[1] + (16 - len2), number2, len2);
+        }
+        Twos_complement(inputmatrix[1]);
+
+        int result_status = Binary_Addition(inputmatrix, result);
+
+        if (result_status == 0){
+            printf("\n""The sum of the 2 binary bumbers is: %s\n",result);
+        }
         break;
+    }
     case 3:
         //Binary_Multiplication();
         break;
@@ -97,7 +127,7 @@ int Binary_Addition(const char BinaryMatrix[2][17],char *output_buffer){
     int Bit1;
     int Bit2;
     int carry = 0;
-    char result[16];
+    char result[17];
     for(int i = 15; i >=0 ; i--){
         Bit1 = (BinaryMatrix[0][i] - '0');
         Bit2 = (BinaryMatrix[1][i] - '0');
@@ -116,14 +146,27 @@ int Binary_Addition(const char BinaryMatrix[2][17],char *output_buffer){
             carry = 1;
         }
     }
-    if(carry ==1){
-        printf("Number is too large to store in 16 bits");
-        return -1;
-    }else{
-        printf("Number Valid");
-        strncpy(output_buffer,result,16);
-        output_buffer[16] = '\0';
-        return 0;
-    }
+   
+    printf("Number Valid");
+    strncpy(output_buffer,result,16);
+    output_buffer[16] = '\0';
+    return 0;   
     
+}
+void Twos_complement(char SubtractorInput[]){
+    bool BitCheck = false;
+    for(int i = 15;i>=0;i--){
+        char bit = SubtractorInput[i];
+        if(BitCheck == false){
+            if(bit == '1'){
+                BitCheck = true;
+            }
+        }else{
+            if (SubtractorInput[i] =='0'){
+                SubtractorInput[i] = '1';
+            }else{
+                SubtractorInput[i] = '0';
+            }
+        }
+    }
 }
