@@ -2,6 +2,9 @@
 #include "funcs.h"
 #include <string.h>
 
+extern void main_menu(void);
+extern int enter_binary_number(char *output_buffer, size_t buffer_size);
+
 void Mathematical_Operation(void) {
     printf("\n>> Mathematical Operation Menu\n");
     printf("\n"
