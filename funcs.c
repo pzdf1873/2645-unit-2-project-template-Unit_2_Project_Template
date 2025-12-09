@@ -47,11 +47,11 @@ void Mathematical_Operation(void) {
     }
     case 3:{
         char inputmatrix[2][17];
-        char result[18];
+        char result[33]; //error was here
         if (PrepareBinaryInputs(inputmatrix) != 0) break;
         
         int result_status = Binary_Multiplication(inputmatrix, result);
-        
+
         if (result_status == 0){
             printf("\n""The mathematical operation of the two binary bnumbers is: %s\n",result);
         }
@@ -239,7 +239,6 @@ int Binary_Addition_32bit(const char BinaryMatrix[2][33], char *output_buffer){
         }
     }
    
-    printf("Number Valid");
     strncpy(output_buffer,result,32);
     output_buffer[32] = '\0';
     return 0;
