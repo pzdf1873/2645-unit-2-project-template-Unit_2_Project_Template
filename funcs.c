@@ -11,15 +11,28 @@ void Mathematical_Operation(void) {
            "\t3. Binary Multiplication\t\t\n"
            "\t4. Exit to Menu\t\t\n"
            "\t\t\t\t\t\t\n");
-    int input;      
+    int input; //I need to add code to handle the input     
     switch (input)
     {
     case 1:
-        char number1 = enter_binary_number();
-        char number2 = enter_binary_number();
-        char inputmatrix[0] = number1;
-        inputmatrix[1] = number2;
-        char result = Binary_Addition(inputmatrix);
+        char number1[16];
+        char number2[16];
+        char result[17]; //to deal with the carry
+        
+        if (enter_binary_number(number1, sizeof(number1)) != 0) break;
+        if (enter_binary_number(number2, sizeof(number2)) != 0) break;
+
+        char inputmatrix[2][16];
+        strncpy(inputmatrix[0], number1, sizeof(inputmatrix[0]) - 1);
+        inputmatrix[0][sizeof(inputmatrix[0]) - 1] = '\0'; //getting rid of the null pointer
+        strncpy(inputmatrix[1], number2, sizeof(inputmatrix[1]) - 1);
+        inputmatrix[1][sizeof(inputmatrix[1]) - 1] = '\0'; 
+
+        int result_status = Binary_Addition(inputmatrix, result);
+
+        if (result_status == 0){
+            printf("The sum of the 2 binary bumbers is: %s\n",result);
+        }
         break;
     case 2:
         Binary_Subtraction();
@@ -67,32 +80,26 @@ int is_valid_input(const char BinaryInput[]){
         return -1;
     }
 }
-char Binary_Addition(const char BinaryMatrix[2][16]){
+char Binary_Addition(const char BinaryMatrix[2][16],char *output_buffer){
     int Bit1;
     int Bit2;
     int carry = 0;
     char result[16];
-    for(int i; i = (16-1) ; i--){
+    for(int i = 15; i >0 ; i--){
         Bit1 = (BinaryMatrix[0][i] - '0');
         Bit2 = (BinaryMatrix[1][i] - '0');
 
         if(Bit1 + Bit2 + carry == 0){
-            result[i] = 0;
+            result[i] = '0';
             carry = 0;
         }else if(Bit1 + Bit2 + carry == 1){
-
-            result[i] = 1;
-
+            result[i] = '1';
             carry = 0;
         }else if(Bit1 + Bit2 + carry == 2){
-
-            result[i] = 0;
-
+            result[i] = '0';
             carry = 1;
         }else if(Bit1 + Bit2 + carry == 3){
-
-            result[i] = 1;
-
+            result[i] = '1';
             carry = 1;
         }
     }
@@ -101,7 +108,9 @@ char Binary_Addition(const char BinaryMatrix[2][16]){
         return -1;
     }else{
         printf("Number Valid");
-        return result;
+        strncpy(output_buffer,result,16);
+        output_buffer[16] = '\0';
+        return 0;
     }
     
 }

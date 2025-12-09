@@ -143,14 +143,21 @@ static int is_integer(const char *s)
 static int enter_binary_number(char *output_buffer, size_t buffer_size){
     char BinaryInput[16];
     printf("Enter your binary number: ");
-    fgets(BinaryInput,16,stdin);
-    BinaryInput[strcspn(BinaryInput, "\r\n")] = '\0'; //Need to get rid of the end of array so length is correct
-    int check =  is_valid_input(BinaryInput);
-    if(check !=0){
-        printf("Invalid input");
-    }else{
-        printf("Valid input");
-        return BinaryInput;
-    }
 
+    if (!fgets(BinaryInput, sizeof(BinaryInput), stdin)) {
+        return -2; // Added some internal error checks just in case
+    }
+    BinaryInput[strcspn(BinaryInput, "\r\n")] = '\0'; // Get rid of the \0 that i dont want
+    
+    int check = is_valid_input(BinaryInput);
+    if(check != 0){
+        printf("Invalid input\n");
+        return check;
+    } else {
+        printf("Valid input\n");
+        
+        strncpy(output_buffer, BinaryInput, buffer_size - 1);
+        output_buffer[buffer_size - 1] = '\0';
+        return 0; // Success
+    }
 }
