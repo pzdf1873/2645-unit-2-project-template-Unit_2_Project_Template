@@ -15,14 +15,14 @@ void Mathematical_Operation(void) {
            "\t3. Binary Multiplication\t\t\n"
            "\t4. Exit to Menu\t\t\n"
            "\t\t\t\t\t\t\n");
-    int input = get_math_input(); //I need to add code to handle the input 
+    int input = get_math_input(); 
 
     switch (input)
     {
     case 1:{
         char inputmatrix[2][17];
         char result[18];
-        
+
         if (PrepareBinaryInputs(inputmatrix) != 0) break;
 
         int result_status = Binary_Addition(inputmatrix, result);
@@ -139,7 +139,7 @@ void Twos_complement(char SubtractorInput[]){
     }
 }
 
-int prepareInputs(char inputmatrix[2][17]){
+int PrepareBinaryInputs(char inputmatrix[2][17]){
     char number1[17];
     char number2[17];
     char result[18];
@@ -160,5 +160,78 @@ int prepareInputs(char inputmatrix[2][17]){
     if (len2 <= 16) {
         strncpy(inputmatrix[1] + (16 - len2), number2, len2);
     }
+    return 0;
+}
+int Binary_Multiplication(const char BinaryMatrix[2][17],char *output_buffer){
+    char product[16][33];
+    for(int r = 0;r<16;r++){
+        for(int c = 0;c<32;c++){
+            product[r][c] = '0';
+        }
+    product[r][32] = '\0';
+    }
+
+    for(int i = 15; i>=0; i--){
+        int currentmultiplier = BinaryMatrix[1][i] - '0';
+        int row_index = 15-i;
+        if (currentmultiplier == 0){
+            continue;
+        }
+        for(int t = 15; t>=0; t--){
+            char product_bit = BinaryMatrix[0][t];
+            int multiplier_shift = 15-i;
+            int multiplicand_shift = 15-t;
+            int total_offset = multiplier_shift + multiplicand_shift;
+            int column_index = 31 - total_offset;
+
+            if(column_index>=0 &&column_index<32){
+                product[row_index][column_index] = product_bit;
+            }
+        }
+    }
+    char current_sum[33];
+    char next_add[2][33];
+
+    strcpy(current_sum, product[0]);
+    for(int r = 1;r<16;r++){
+        strcopy(next_add[0],current_sum);
+        strcopy(next_add[1],product[r]);
+        int status = Binary_Addition_32bit(next_add,current_sum);
+        if(status != 0){
+            printf("Error during addition");
+            return -1;
+        }
+    }
+    strcpy(output_buffer, current_sum);
+    return 0;
+}
+
+int Binary_Addition_32bit(const char BinaryMatrix[2][33], char *output_buffer){
+    int Bit1;
+    int Bit2;
+    int carry = 0;
+    char result[33];
+    for(int i = 31; i >=0 ; i--){
+        Bit1 = (BinaryMatrix[0][i] - '0');
+        Bit2 = (BinaryMatrix[1][i] - '0');
+
+        if(Bit1 + Bit2 + carry == 0){
+            result[i] = '0';
+            carry = 0;
+        }else if(Bit1 + Bit2 + carry == 1){
+            result[i] = '1';
+            carry = 0;
+        }else if(Bit1 + Bit2 + carry == 2){
+            result[i] = '0';
+            carry = 1;
+        }else if(Bit1 + Bit2 + carry == 3){
+            result[i] = '1';
+            carry = 1;
+        }
+    }
+   
+    printf("Number Valid");
+    strncpy(output_buffer,result,32);
+    output_buffer[32] = '\0';
     return 0;
 }
