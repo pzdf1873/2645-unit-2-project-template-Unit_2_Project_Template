@@ -172,7 +172,7 @@ void Binary_Conversion(void) {
                 strncpy(number + (16 - len1), temp_number, len1);
             }
             int result_status = conversion_to_hex(number,result);
-            printf("\n""Converting this binary number to hex gives: %d\n",result);
+            printf("\n""Converting this binary number to hex gives: %s\n",result);
             break;            
         }
         case 3:
@@ -408,7 +408,7 @@ int conversion_to_denary(char BinaryInput[16]){
  int conversion_to_hex(char BinaryInput[16],char *output_buffer){
     int denary_value = conversion_to_denary(BinaryInput);
     char hex_result[5];
-    char hex_compare[17] = {0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'};
+    char hex_compare[17] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
     hex_compare[16] = '\0';
     int quotient = denary_value;
     int i = 3; //Going from LSB as 4 has \0
