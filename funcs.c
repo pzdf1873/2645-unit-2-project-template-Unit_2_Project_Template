@@ -102,6 +102,7 @@ void Logical_Operation(void) {
             if (result_status == 0){
                 printf("\n""The result of applying a logical OR to the two numbers is: %s\n",result);
             }
+            break;
         }
         case 3:{
             char number[17];
@@ -121,15 +122,66 @@ void Logical_Operation(void) {
             if (result_status == 0){
                 printf("\n""The result of applying a logical NOT to the number is: %s\n",result);
             }
+            break;
         }
-
+        case 4: 
+            main_menu();
+            break;
+        default:
+            main_menu();
+            break;
     }
 }
 
 void Binary_Conversion(void) {
-    printf("\n>> Menu 3\n");
-    printf("\nSome code here does something useful\n");
-    /* you can call a function from here that handles menu 3 */
+    printf("\n>> Logical Operation Menu\n");
+    printf("\n"
+           "\t\t\t\t\t\t\n"
+           "\t1. Conversion to Denary\t\t\n"
+           "\t2. Conversion to HEX\t\t\n"
+           "\t3. Exit to Menu\t\t\n"
+           "\t\t\t\t\t\t\n");
+    int input = get_conversion_input();
+    switch(input){
+        case 1:{ //Binary to Denary
+            char number[17];
+            char temp_number[17];
+
+            if (enter_binary_number(temp_number, sizeof(temp_number)) != 0) break;
+            size_t len1 = strlen(temp_number);
+            memset(number, '0', 16);
+            number[16] = '\0';
+            if (len1 <= 16) {
+                strncpy(number + (16 - len1), temp_number, len1);
+            }
+            int denary_result = conversion_to_denary(number);
+            
+            printf("\n""Converting this binary number to denary gives: %d\n",denary_result);
+            break;                
+        }
+        case 2:{
+            char number[17];
+            char temp_number[17];
+            char result[17];
+
+            if (enter_binary_number(temp_number, sizeof(temp_number)) != 0) break;
+            size_t len1 = strlen(temp_number);
+            memset(number, '0', 16);
+            number[16] = '\0';
+            if (len1 <= 16) {
+                strncpy(number + (16 - len1), temp_number, len1);
+            }
+            int result_status = conversion_to_hex(number,result);
+            printf("\n""Converting this binary number to hex gives: %d\n",result);
+            break;            
+        }
+        case 3:
+            main_menu();
+            break;
+        default:
+            break;
+
+    }
 }
 
 void menu_item_4(void) {
@@ -340,4 +392,47 @@ int Logical_NOT(char BinaryInput[16], char *output_buffer){
     strncpy(output_buffer,result,16);
     output_buffer[16] = '\0';
     return 0;
+}
+int conversion_to_denary(char BinaryInput[16]){
+    int ComparisonArray[16] = {32768,16384,8192,4096,2048,1024,512,256,128,64,32,16,8,4,2,1};
+    int denary_value = 0;
+
+    for(int i=0;i<=15;i++){
+        if(BinaryInput[i] == '1'){
+            denary_value = denary_value + ComparisonArray[i];
+        }
+    }
+    return denary_value;
+
+}
+ int conversion_to_hex(char BinaryInput[16],char *output_buffer){
+    int denary_value = conversion_to_denary(BinaryInput);
+    char hex_result[5];
+    char hex_compare[17] = {0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'};
+    hex_compare[16] = '\0';
+    int quotient = denary_value;
+    int i = 3; //Going from LSB as 4 has \0
+    hex_result[4] = '\0';
+
+    if (quotient ==0){
+        strcpy(hex_result, "0000");
+    }else{
+        while (quotient > 0 && i >=0)
+        {
+            int remainder = quotient % 16;
+            hex_result[i] = hex_compare[remainder];
+
+            quotient/=16;
+            i--;
+        }
+        while(i>=0){
+            hex_result[i] = '0';
+            i--;
+
+        }
+        
+    }
+    strcpy(output_buffer,hex_result);
+    return 0;
+
 }

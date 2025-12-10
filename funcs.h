@@ -18,5 +18,7 @@ int get_logic_input(void);
 int Logical_AND(const char BinaryMatrix[2][17], char *output_buffer);
 int Logical_OR(const char BinaryMatrix[2][17], char *output_buffer);
 int Logical_NOT(char BinaryInput[16], char *output_buffer);
-
+int get_conversion_input(void);
+int conversion_to_denary(char BinaryInput[16]);
+int conversion_to_hex(char BinaryInput[16],char *output_buffer);
 #endif

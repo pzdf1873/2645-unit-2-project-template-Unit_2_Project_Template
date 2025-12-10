@@ -229,3 +229,38 @@ int get_logic_input(void)
 
     return value;
 }
+
+int get_conversion_input(void)
+{
+    enum { CONVERSION_MENU_ITEMS = 3 };   //* 1..2 items 3 = exit
+    char buf[128];
+    int valid_input = 0;
+    int value = 0;
+
+    do {
+        printf("\nSelect item: ");
+        if (!fgets(buf, sizeof(buf), stdin)) {
+            /* EOF or error; bail out gracefully */
+            puts("\nInput error. Exiting.");
+            exit(1);
+        }
+
+        // strip trailing newline
+        buf[strcspn(buf, "\r\n")] = '\0';
+
+        if (!is_integer(buf)) {
+            printf("Enter an integer!\n");
+            valid_input = 0;
+        } else {
+            value = (int)strtol(buf, NULL, 10);
+            if (value >= 1 && value <= CONVERSION_MENU_ITEMS) {
+                valid_input = 1;
+            } else {
+                printf("Invalid menu item!\n");
+                valid_input = 0;
+            }
+        }
+    } while (!valid_input);
+
+    return value;
+}
