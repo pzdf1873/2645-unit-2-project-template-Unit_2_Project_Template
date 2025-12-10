@@ -14,6 +14,9 @@ int get_math_input(void);
 void Twos_complement(char SubtractorInput[]);
 int PrepareBinaryInputs(char inputmatrix[2][17]);
 int Binary_Multiplication(const char BinaryMatrix[2][17], char *output_buffer);
-
+int get_logic_input(void);
+int Logical_AND(const char BinaryMatrix[2][17], char *output_buffer);
+int Logical_OR(const char BinaryMatrix[2][17], char *output_buffer);
+int Logical_NOT(char BinaryInput[16], char *output_buffer);
 
 #endif

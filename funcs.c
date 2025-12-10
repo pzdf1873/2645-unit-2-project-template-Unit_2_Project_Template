@@ -6,6 +6,7 @@
 extern void main_menu(void);
 extern int enter_binary_number(char *output_buffer, size_t buffer_size);
 
+
 void Mathematical_Operation(void) {
     printf("\n>> Mathematical Operation Menu\n");
     printf("\n"
@@ -68,9 +69,61 @@ void Mathematical_Operation(void) {
 }
 
 void Logical_Operation(void) {
-    printf("\n>> Menu 2\n");
-    printf("\nSome code here does something useful\n");
-    /* you can call a function from here that handles menu 2 */
+    printf("\n>> Logical Operation Menu\n");
+    printf("\n"
+           "\t\t\t\t\t\t\n"
+           "\t1. Logical AND\t\t\n"
+           "\t2. Logical OR\t\t\n"
+           "\t3. Logical NOT\t\t\n"
+           "\t4. Exit to Menu\t\t\n"
+           "\t\t\t\t\t\t\n");
+    int input = get_logic_input();
+
+    switch(input){
+        case 1:{ //Logical AND 
+            char inputmatrix[2][17];
+            char result[18];
+            if (PrepareBinaryInputs(inputmatrix) != 0) break;
+
+            int result_status = Logical_AND(inputmatrix, result);
+
+            if (result_status == 0){
+                printf("\n""The result of applying a logical AND to the two numbers is: %s\n",result);
+            }
+        break;
+        }
+        case 2:{
+            char inputmatrix[2][17];
+            char result[18];
+            if (PrepareBinaryInputs(inputmatrix) != 0) break;
+
+            int result_status = Logical_OR(inputmatrix, result);
+
+            if (result_status == 0){
+                printf("\n""The result of applying a logical OR to the two numbers is: %s\n",result);
+            }
+        }
+        case 3:{
+            char number[17];
+            char result[17];
+            char temp_number[17];
+
+            if (enter_binary_number(temp_number, sizeof(temp_number)) != 0) break;
+            size_t len1 = strlen(temp_number);
+            memset(number, '0', 16);
+            number[16] = '\0';
+            if (len1 <= 16) {
+            strncpy(number + (16 - len1), temp_number, len1);
+            }
+
+            int result_status = Logical_NOT(number, result);
+
+            if (result_status == 0){
+                printf("\n""The result of applying a logical NOT to the number is: %s\n",result);
+            }
+        }
+
+    }
 }
 
 void Binary_Conversion(void) {
@@ -241,5 +294,50 @@ int Binary_Addition_32bit(const char BinaryMatrix[2][33], char *output_buffer){
    
     strncpy(output_buffer,result,32);
     output_buffer[32] = '\0';
+    return 0;
+}
+
+int Logical_AND(const char BinaryMatrix[2][17], char *output_buffer){
+    int bit1;
+    int bit2;
+    char result[17];
+    for(int i = 0;i<=15;i++){
+        if(BinaryMatrix[0][i] == '1' && BinaryMatrix[1][i] == '1'){
+            result[i] = '1';
+        }else{
+            result[i] = '0';
+        }
+    }
+    strncpy(output_buffer,result,16);
+    output_buffer[16] = '\0';
+    return 0;
+}
+
+int Logical_OR(const char BinaryMatrix[2][17], char *output_buffer){
+    int bit1;
+    int bit2;
+    char result[17];
+    for(int i = 0;i<=15;i++){
+        if(BinaryMatrix[0][i] == '1' || BinaryMatrix[1][i] == '1'){
+            result[i] = '1';
+        }else{
+            result[i] = '0';
+        }
+    }
+    strncpy(output_buffer,result,16);
+    output_buffer[16] = '\0';
+    return 0;
+}
+int Logical_NOT(char BinaryInput[16], char *output_buffer){
+    char result[17];
+    for(int i = 0;i<=15;i++){
+        if(BinaryInput[i]=='1'){
+            result[i] = '0';
+        }else{
+            result[i] = '1';
+        }
+    }
+    strncpy(output_buffer,result,16);
+    output_buffer[16] = '\0';
     return 0;
 }
