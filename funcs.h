@@ -4,7 +4,6 @@
 void Mathematical_Operation(void);
 void Logical_Operation(void);
 void Binary_Conversion(void);
-void menu_item_4(void);
 int is_valid_input(const char BinaryInput[]);
 int Binary_Addition(const char BinaryMatrix[2][17], char *output_buffer);
 int Binary_Addition_32bit(const char BinaryMatrix[2][33], char *output_buffer);

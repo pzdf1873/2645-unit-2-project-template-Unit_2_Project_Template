@@ -1,5 +1,3 @@
-// ELEC2645 Unit 2 Project Template
-// Command Line Application Menu Handling Code
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,7 +6,7 @@
 #include <math.h>
 #include "funcs.h"
 
-/* Prototypes mirroring the C++ version */
+
 void main_menu(void);            /* runs in the main loop */
 static void print_main_menu(void);      /* output the main menu description */
 static int  get_user_input(void);       /* get a valid integer menu choice */
@@ -38,7 +36,7 @@ void main_menu(void)
 
 static int get_user_input(void)
 {
-    enum { MENU_ITEMS = 5 };   /* 1..4 = items, 5 = Exit */
+    enum { MENU_ITEMS = 4 };   /* 1..4 = items, 5 = Exit */
     char buf[128];
     int valid_input = 0;
     int value = 0;
@@ -86,10 +84,7 @@ static void select_menu_item(int input)
             Binary_Conversion();
             go_back_to_main();
             break;
-        case 4:
-            menu_item_4();
-            go_back_to_main();
-            break;
+        
         default:
             printf("Bye!\n");
             exit(0);
@@ -98,14 +93,13 @@ static void select_menu_item(int input)
 
 static void print_main_menu(void)
 {
-    printf("\n----------- Main menu -----------\n");
+    printf("\n----------- Main menu -----------\n"); // Displays the main menu 
     printf("\n"
            "\t\t\t\t\t\t\n"
            "\t1. Mathematical Operation\t\t\n"
            "\t2. Logical Operation\t\t\n"
            "\t3. Binary Conversion\t\t\n"
-           "\t4. Menu item 4\t\t\n"
-           "\t5. Exit\t\t\t\t\n"
+           "\t4. Exit\t\t\n"
            "\t\t\t\t\t\t\n");
     printf("---------------------------------------------\n");
 }
@@ -156,7 +150,7 @@ int enter_binary_number(char *output_buffer, size_t buffer_size){
     } else {
         printf("Valid input\n");
         
-        strncpy(output_buffer, BinaryInput, buffer_size - 1);
+        strncpy(output_buffer, BinaryInput, buffer_size - 1); // 0 based
         output_buffer[buffer_size - 1] = '\0';
         return 0; // Success
     }
