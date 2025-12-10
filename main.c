@@ -141,7 +141,7 @@ static int is_integer(const char *s)
     return 1;
 }
 int enter_binary_number(char *output_buffer, size_t buffer_size){
-    char BinaryInput[16];
+    char BinaryInput[17];
     printf("Enter your binary number: ");
 
     if (!fgets(BinaryInput, sizeof(BinaryInput), stdin)) {
